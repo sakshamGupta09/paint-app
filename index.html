@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="title" content="Paint app" />
+    <meta name="description" content="Paint app by Saksham Gupta" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Paint app" />
+    <meta property="og:url" content="https://sakshamgupta.vercel.app/" />
+    <meta property="og:description" content="Paint app by Saksham Gupta" />
+    <meta
+      property="og:image"
+      content="https://sakshamgupta.vercel.app/assets/images/manOnTable.svg"
+    />
+    <meta property="og:site_name" content="Paint app" />
+    <meta name="twitter:title" content="Paint app by Saksham Gupta" />
+    <meta name="twitter:description" content="Paint app by Saksham Gupta" />
+    <meta
+      name="twitter:image"
+      content="https://sakshamgupta.vercel.app/assets/images/manOnTable.svg"
+    />
+    <title>Paint app</title>
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header class="header flex items-center justify-center">
+      <!-- Brush -->
+      <div
+        title="Brush"
+        class="tool flex justify-center items-center rounded w-12 h-12 text-xl cursor-pointer"
+      >
+        <i class="fa fa-user"></i>
+      </div>
+      <!-- Pen color picker -->
+      <div class="ml-3">
+        <input type="color" class="cursor-pointer" />
+      </div>
+      <!-- Pen size -->
+      <div
+        title="Pen size"
+        class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
+      >
+        10
+      </div>
+      <!-- Pen size range slider -->
+      <div class="ml-3">
+        <input type="range" min="1" max="50" value="10" class="slider" />
+      </div>
+      <!-- Whiteboard background -->
+      <div
+        title="Whiteboard colour"
+        class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3"
+      >
+        <i class="fa fa-user"></i>
+      </div>
+      <!-- Whiteboard background color picker -->
+      <div class="ml-3">
+        <input type="color" class="cursor-pointer" />
+      </div>
+      <!-- Eraser -->
+      <div
+        title="Eraser"
+        class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
+      >
+        <i class="fa fa-user"></i>
+      </div>
+      <!-- Clear all -->
+      <div
+        title="Clear all"
+        class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
+      >
+        <i class="fa fa-user"></i>
+      </div>
+      <!-- Save change to local storage -->
+      <div
+        title="Save to local storage"
+        class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
+      >
+        <i class="fa fa-user"></i>
+      </div>
+      <!-- Fetch changes from local storage -->
+      <div
+        title="Fetch last saved paint"
+        class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
+      >
+        <i class="fa fa-user"></i>
+      </div>
+      <!-- Delete saved paint -->
+      <div
+        title="Delete saved paint"
+        class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
+      >
+        <i class="fa fa-user"></i>
+      </div>
+      <!-- Download paint as image -->
+      <div
+        title="Download paint as image"
+        class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
+      >
+        <i class="fa fa-user"></i>
+      </div>
+    </header>
+    <script src="/scripts/index.js"></script>
+  </body>
+</html>

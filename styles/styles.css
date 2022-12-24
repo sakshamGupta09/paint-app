@@ -1,0 +1,28 @@
+@import url("./variables.css");
+
+@import url("./utilities.css");
+
+@import url("./range-slider.css");
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-size: 1rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header {
+  height: var(--headerHeight);
+  background-color: orange;
+}
+
+.tool {
+  border: 2px solid;
+}
