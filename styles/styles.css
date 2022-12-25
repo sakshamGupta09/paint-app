@@ -10,6 +10,7 @@ html {
 
 body {
   font-size: 1rem;
+  font-family: "Open Sans", sans-serif;
 }
 
 * {
@@ -20,9 +21,16 @@ body {
 
 .header {
   height: var(--headerHeight);
-  background-color: orange;
+  background-color: rgb(226 232 240);
 }
 
 .tool {
-  border: 2px solid;
+  border: 2px solid rgb(209 213 219);
+  background-color: rgb(248 250 252);
+  color: rgb(148 163 184);
+}
+
+.canvas {
+  width: 100%;
+  height: calc(100vh - var(--headerHeight));
 }
