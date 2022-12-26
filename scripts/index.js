@@ -137,10 +137,9 @@ function onMouseUp() {
 }
 
 function getMousePosition(e) {
-  const rect = canvasElement.getBoundingClientRect();
   const mouseCoordinatesRelativeToCanvas = {
-    x: e.clientX - rect.left,
-    y: e.clientY - rect.top,
+    x: e.offsetX,
+    y: e.offsetY,
   };
   return mouseCoordinatesRelativeToCanvas;
 }
