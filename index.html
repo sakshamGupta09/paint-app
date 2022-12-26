@@ -42,25 +42,39 @@
     <header class="header flex items-center justify-center">
       <!-- Brush -->
       <div
+        id="brush"
         title="Brush"
-        class="tool flex justify-center items-center rounded w-12 h-12 text-xl cursor-pointer"
+        class="tool tool--active flex justify-center items-center rounded w-12 h-12 text-xl cursor-pointer"
       >
         <i class="fas fa-pencil"></i>
       </div>
       <!-- Pen color picker -->
       <div class="ml-3">
-        <input type="color" class="cursor-pointer" />
+        <input
+          type="color"
+          value="#ef4444"
+          id="brushColor"
+          class="cursor-pointer"
+        />
       </div>
       <!-- Pen size -->
       <div
         title="Pen size"
         class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
+        id="brushSizeValue"
       >
         10
       </div>
       <!-- Pen size range slider -->
       <div class="ml-3">
-        <input type="range" min="1" max="50" value="10" class="slider" />
+        <input
+          type="range"
+          min="1"
+          max="50"
+          value="10"
+          id="brushSize"
+          class="slider"
+        />
       </div>
       <!-- Whiteboard background -->
       <div
@@ -71,17 +85,24 @@
       </div>
       <!-- Whiteboard background color picker -->
       <div class="ml-3">
-        <input type="color" class="cursor-pointer" />
+        <input
+          type="color"
+          value="#ffffff"
+          id="bgColorPicker"
+          class="cursor-pointer"
+        />
       </div>
       <!-- Eraser -->
       <div
         title="Eraser"
+        id="eraser"
         class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
       >
         <i class="fas fa-eraser"></i>
       </div>
       <!-- Clear all -->
       <div
+        id="clearCanvas"
         title="Clear all"
         class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
       >
@@ -89,6 +110,7 @@
       </div>
       <!-- Save change to local storage -->
       <div
+        id="saveCanvas"
         title="Save to local storage"
         class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
       >
@@ -96,6 +118,7 @@
       </div>
       <!-- Fetch changes from local storage -->
       <div
+        id="loadCanvas"
         title="Fetch last saved paint"
         class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
       >
@@ -103,6 +126,7 @@
       </div>
       <!-- Delete saved paint -->
       <div
+        id="deleteSavedCanvas"
         title="Delete saved paint"
         class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
       >
@@ -110,6 +134,7 @@
       </div>
       <!-- Download paint as image -->
       <div
+        id="downloadCanvas"
         title="Download paint as image"
         class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
       >
