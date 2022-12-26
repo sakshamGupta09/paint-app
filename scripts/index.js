@@ -62,9 +62,10 @@ canvasElement.addEventListener("mousemove", onMouseMove);
 
 // Functions
 
-function setCanvasBg(e) {
-  canvasBackgroundColor = e.target.value;
-  canvasElement.style.backgroundColor = canvasBackgroundColor;
+function setCanvasBg() {
+  canvasBackgroundColor = canvasBgColorPickerElement.value;
+  renderingContext.fillStyle = canvasBackgroundColor;
+  renderingContext.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function setBrushSize(e) {
@@ -84,8 +85,11 @@ function setBrushColor(e) {
   brushColor = e.target.value;
 }
 
-function setRenderingContext() {
+function initCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight - 72;
   renderingContext = canvasElement.getContext("2d");
+  setCanvasBg();
 }
 
 function onBrushClicked() {
@@ -118,7 +122,6 @@ function onMouseDown(e) {
   renderingContext.lineWidth = brushSize;
   renderingContext.strokeStyle = brushColor;
   renderingContext.lineCap = "round";
-  console.log(mouseCoordinates);
 }
 
 function onMouseMove(e) {
@@ -144,4 +147,4 @@ function getMousePosition(e) {
 
 // On load
 
-setRenderingContext();
+initCanvas();
