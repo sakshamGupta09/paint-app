@@ -60,13 +60,13 @@ eraserElement.addEventListener("click", onEraserClicked);
 
 brushElement.addEventListener("click", onBrushClicked);
 
-// clearCanvasElement.addEventListener("click", clearCanvas);
+clearCanvasElement.addEventListener("click", onClearCanvas);
 
-// saveCanvasElement.addEventListener("click", saveCanvas);
+saveCanvasElement.addEventListener("click", onSaveCanvas);
 
-// loadCanvasElement.addEventListener("click", loadCanvas);
+loadCanvasElement.addEventListener("click", onLoadCanvas);
 
-// deleteSavedCanvasElement.addEventListener("click", deleteSavedCanvas);
+deleteSavedCanvasElement.addEventListener("click", onDeleteCanvas);
 
 canvasElement.addEventListener("mousedown", onMouseDown);
 
@@ -74,13 +74,14 @@ canvasElement.addEventListener("mouseup", onMouseUp);
 
 canvasElement.addEventListener("mousemove", onMouseMove);
 
-// downloadCanvasElement.addEventListener("click", downloadCanvas);
+downloadCanvasElement.addEventListener("click", onDownloadCanvas);
 
 // Utility functions
 
 function setCanvasBackground() {
   renderingContext.fillStyle = canvasBackgroundColor;
   renderingContext.fillRect(0, 0, canvasElement.width, canvasElement.height);
+  drawings.length && restoreDrawing();
 }
 
 function setActiveToolStyles() {
@@ -119,6 +120,27 @@ function getMousePosition(e) {
 function drawLine(point) {
   renderingContext.lineTo(point.x, point.y);
   renderingContext.stroke();
+}
+
+function saveLine(coordinates) {
+  let point = {
+    x: coordinates.x,
+    y: coordinates.y,
+    brushColor,
+    brushSize,
+  };
+  drawings.push(point);
+}
+
+function restoreDrawing() {
+  for (let i = 1; i < drawings.length; i++) {
+    renderingContext.strokeStyle = drawings[i].brushColor;
+    renderingContext.lineWidth = drawings[i].brushSize;
+    renderingContext.lineCap = "round";
+    renderingContext.beginPath();
+    renderingContext.moveTo(drawings[i - 1].x, drawings[i - 1].y);
+    drawLine(drawings[i]);
+  }
 }
 
 // Functions
@@ -168,8 +190,34 @@ function onMouseMove(e) {
   if (isMouseDown) {
     const mousePosition = getMousePosition(e);
     drawLine(mousePosition);
+    saveLine(mousePosition);
   }
 }
+
+function onClearCanvas() {
+  drawings = [];
+  setCanvasBackground();
+}
+
+function onSaveCanvas() {
+  localStorage.setItem("canvas", JSON.stringify(drawings));
+}
+
+function onLoadCanvas() {
+  const shape = JSON.parse(localStorage.getItem("canvas")) || [];
+  drawings = shape;
+  drawings && restoreDrawing();
+}
+
+function onDeleteCanvas() {
+  localStorage.removeItem("canvas");
+}
+
+function onDownloadCanvas() {
+  downloadCanvasElement.href = canvasElement.toDataURL("image/jpeg", 1);
+  downloadCanvasElement.download = "paint";
+}
+
 // On load
 
 initCanvas();
