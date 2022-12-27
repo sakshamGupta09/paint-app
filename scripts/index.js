@@ -1,14 +1,26 @@
+// Constants
+
+const DEFAULT_BRUSH_SIZE = 10;
+
+const DEFAULT_ERASER_SIZE = 50;
+
+const DEFAULT_BRUSH_COLOR = "#ef4444";
+
+const DEFAULT_CANVAS_BACKGROUND_COLOR = "#ffffff";
+
 // State
 
-let brushSize = 10;
+let brushSize = DEFAULT_BRUSH_SIZE;
 
-let brushColor = "#ef4444";
+let brushColor = DEFAULT_BRUSH_COLOR;
 
-let canvasBackgroundColor = "#ffffff";
+let canvasBackgroundColor = DEFAULT_CANVAS_BACKGROUND_COLOR;
 
 let renderingContext;
 
 let isMouseDown = false;
+
+let drawings = [];
 
 // Dom Elements
 
@@ -34,25 +46,27 @@ const loadCanvasElement = document.getElementById("loadCanvas");
 
 const deleteSavedCanvasElement = document.getElementById("deleteSavedCanvas");
 
+const downloadCanvasElement = document.getElementById("downloadCanvas");
+
 // Event listeners
 
-canvasBgColorPickerElement.addEventListener("change", setCanvasBg);
+canvasBgColorPickerElement.addEventListener("change", onCanvasBgColorChange);
 
-brushSizeRangeElement.addEventListener("change", setBrushSize);
+brushSizeRangeElement.addEventListener("change", onBrushSizeChange);
 
-brushColorPickerElement.addEventListener("change", setBrushColor);
+brushColorPickerElement.addEventListener("change", onBrushColorChange);
 
 eraserElement.addEventListener("click", onEraserClicked);
 
 brushElement.addEventListener("click", onBrushClicked);
 
-clearCanvasElement.addEventListener("click", clearCanvas);
+// clearCanvasElement.addEventListener("click", clearCanvas);
 
-saveCanvasElement.addEventListener("click", saveCanvas);
+// saveCanvasElement.addEventListener("click", saveCanvas);
 
-loadCanvasElement.addEventListener("click", loadCanvas);
+// loadCanvasElement.addEventListener("click", loadCanvas);
 
-deleteSavedCanvasElement.addEventListener("click", deleteSavedCanvas);
+// deleteSavedCanvasElement.addEventListener("click", deleteSavedCanvas);
 
 canvasElement.addEventListener("mousedown", onMouseDown);
 
@@ -60,90 +74,102 @@ canvasElement.addEventListener("mouseup", onMouseUp);
 
 canvasElement.addEventListener("mousemove", onMouseMove);
 
-// Functions
+// downloadCanvasElement.addEventListener("click", downloadCanvas);
 
-function setCanvasBg() {
-  canvasBackgroundColor = canvasBgColorPickerElement.value;
+// Utility functions
+
+function setCanvasBackground() {
   renderingContext.fillStyle = canvasBackgroundColor;
-  renderingContext.fillRect(0, 0, canvas.width, canvas.height);
+  renderingContext.fillRect(0, 0, canvasElement.width, canvasElement.height);
 }
 
-function setBrushSize(e) {
-  brushSize = e.target.value;
-  displayBrushSize();
-}
-
-function displayBrushSize() {
-  let brushSizeValue = brushSize;
-  if (brushSizeValue < 10) {
-    brushSizeValue = `0${brushSizeValue}`;
-  }
-  brushSizeValueElement.textContent = brushSizeValue;
-}
-
-function setBrushColor(e) {
-  brushColor = e.target.value;
-}
-
-function initCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight - 72;
-  renderingContext = canvasElement.getContext("2d");
-  setCanvasBg();
-}
-
-function onBrushClicked() {
-  setActiveToolClass();
-}
-
-function onEraserClicked() {
-  renderingContext.globalCompositeOperation = "destination-out";
-  setActiveToolClass();
-}
-
-function setActiveToolClass() {
+function setActiveToolStyles() {
   brushElement.classList.toggle("tool--active");
   eraserElement.classList.toggle("tool--active");
 }
 
-function clearCanvas() {}
+function setBrushAttributes(size, color) {
+  brushSize = size;
+  brushColor = color;
+}
 
-function saveCanvas() {}
+function setBrushSizeText() {
+  let sizeToDisplay = brushSize;
+  if (brushSize < 10) {
+    sizeToDisplay = `0${brushSize}`;
+  }
+  brushSizeValueElement.textContent = sizeToDisplay;
+}
 
-function loadCanvas() {}
+function setRenderingContextAttributes(mousePosition) {
+  renderingContext.strokeStyle = brushColor;
+  renderingContext.lineWidth = brushSize;
+  renderingContext.lineCap = "round";
+  renderingContext.beginPath();
+  renderingContext.moveTo(mousePosition.x, mousePosition.y);
+}
 
-function deleteSavedCanvas() {}
+function getMousePosition(e) {
+  return {
+    x: e.offsetX,
+    y: e.offsetY,
+  };
+}
+
+function drawLine(point) {
+  renderingContext.lineTo(point.x, point.y);
+  renderingContext.stroke();
+}
+
+// Functions
+
+function initCanvas() {
+  canvasElement.width = window.innerWidth;
+  canvasElement.height = window.innerHeight - 72;
+  renderingContext = canvasElement.getContext("2d");
+  setCanvasBackground();
+}
+
+function onCanvasBgColorChange(e) {
+  canvasBackgroundColor = e.target.value;
+  setCanvasBackground();
+}
+
+function onEraserClicked() {
+  setBrushAttributes(DEFAULT_ERASER_SIZE, canvasBackgroundColor);
+  setActiveToolStyles();
+}
+
+function onBrushClicked() {
+  setBrushAttributes(DEFAULT_BRUSH_SIZE, brushColorPickerElement.value);
+  setActiveToolStyles();
+}
+
+function onBrushSizeChange(e) {
+  brushSize = e.target.value;
+  setBrushSizeText();
+}
+
+function onBrushColorChange(e) {
+  brushColor = e.target.value;
+}
 
 function onMouseDown(e) {
   isMouseDown = true;
-  const mouseCoordinates = getMousePosition(e);
-  renderingContext.moveTo(mouseCoordinates.x, mouseCoordinates.y);
-  renderingContext.beginPath();
-  renderingContext.lineWidth = brushSize;
-  renderingContext.strokeStyle = brushColor;
-  renderingContext.lineCap = "round";
-}
-
-function onMouseMove(e) {
-  if (isMouseDown) {
-    const mouseCoordinates = getMousePosition(e);
-    renderingContext.lineTo(mouseCoordinates.x, mouseCoordinates.y);
-    renderingContext.stroke();
-  }
+  const mousePosition = getMousePosition(e);
+  setRenderingContextAttributes(mousePosition);
 }
 
 function onMouseUp() {
   isMouseDown = false;
 }
 
-function getMousePosition(e) {
-  const mouseCoordinatesRelativeToCanvas = {
-    x: e.offsetX,
-    y: e.offsetY,
-  };
-  return mouseCoordinatesRelativeToCanvas;
+function onMouseMove(e) {
+  if (isMouseDown) {
+    const mousePosition = getMousePosition(e);
+    drawLine(mousePosition);
+  }
 }
-
 // On load
 
 initCanvas();

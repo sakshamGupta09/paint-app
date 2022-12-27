@@ -133,15 +133,16 @@
         <i class="fas fa-trash-alt"></i>
       </div>
       <!-- Download paint as image -->
-      <div
+      <a
         id="downloadCanvas"
         title="Download paint as image"
         class="tool flex justify-center items-center rounded w-12 h-12 text-xl ml-3 cursor-pointer"
       >
         <i class="far fa-save"></i>
-      </div>
+      </a>
     </header>
     <canvas class="canvas" id="canvas"></canvas>
-    <script src="/scripts/index.js"></script>
+    <script type="module" src="/utils/throttle.js"></script>
+    <script type="module" src="/scripts/index.js"></script>
   </body>
 </html>
